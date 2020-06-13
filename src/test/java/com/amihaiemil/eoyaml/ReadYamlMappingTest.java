@@ -155,6 +155,21 @@ public final class ReadYamlMappingTest {
     }
 
     /**
+     * ReadYamlMapping returns the correct value when the key is wrapped in quotes.
+     */
+    @Test
+    public void returnsValueOfStringKeyWithQuotes() {
+        final List<YamlLine> lines = new ArrayList<>();
+        lines.add(new RtYamlLine("\"a-key\": someValue", 0));
+        final YamlMapping map = new ReadYamlMapping(new AllYamlLines(lines));
+
+        MatcherAssert.assertThat(
+                map.string("a-key"),
+                Matchers.equalTo("someValue")
+        );
+    }
+
+    /**
      * ReadYamlMapping can return its values when there are both
      * String and YamlNode keys.
      * @checkstyle ExecutableStatementCount (100 lines)
